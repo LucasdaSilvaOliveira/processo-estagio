@@ -3,6 +3,7 @@ using processo_estágio.BancoDeDados.Entrada;
 using processo_estágio.BancoDeDados.Mercadorias;
 using processo_estágio.BancoDeDados.Saida;
 using processo_estágio.Models;
+using System.Data;
 
 namespace processo_estágio.Controllers
 {
@@ -40,10 +41,10 @@ namespace processo_estágio.Controllers
         public ActionResult Adicionar(string nome, string fabricante, string tipo, string descricao)
         {
 
-            if(nome != null && fabricante != null && tipo != null && descricao != null)
+            if (nome != null && fabricante != null && tipo != null && descricao != null)
             {
                 DatabaseMercadorias.InserirDados(nome, fabricante, tipo, descricao);
-               
+
             }
 
             return RedirectToAction("Index");
@@ -53,27 +54,50 @@ namespace processo_estágio.Controllers
         public ActionResult Entrar(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
 
-            if(quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
+            if (quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
             {
-                DatabaseEntrada.InserirDados(quantidade, dia, mes , ano, hora, local, mercadoria);
+                DatabaseEntrada.InserirDados(quantidade, dia, mes, ano, hora, local, mercadoria);
             }
-            
+
 
             return RedirectToAction("Index");
         }
 
         // ACTION CHAMANDO MÉTODO DO BANCO DE DADOS DA SAIDA PARA INSERIR DADOS NA TABELA
-        public ActionResult Sair(string quantidade, string dia,string mes, string ano, string hora, string local, string mercadoria)
+        public ActionResult Sair(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
 
-            if(quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
+            DataTable dados = DatabaseEntrada.ObterQuantidadeEnt(mercadoria);
+
+            int quantidadeTotal = 0;
+
+            if (dados.Rows.Count != 0 || dados != null)
             {
-                DatabaseSaida.InserirDados(quantidade, dia, mes, ano, hora, local, mercadoria);
-               
-
+                for (int i = 0; i < dados.Rows.Count; i++)
+                {
+                    quantidadeTotal += Convert.ToInt32(dados.Rows[i].ItemArray[0]);
+                }
             }
-            return RedirectToAction("Index");
 
+            if (Convert.ToInt32(quantidade) < quantidadeTotal)
+            {
+
+                if (quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
+                {
+                    DatabaseSaida.InserirDados(quantidade, dia, mes, ano, hora, local, mercadoria);
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Informe");
+            }
+        }
+
+        public ActionResult Informe()
+        {
+            return View();
         }
     }
 }

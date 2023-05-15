@@ -132,5 +132,19 @@ namespace processo_estágio.BancoDeDados.Entrada
             cmd.ExecuteNonQuery();
 
         }
+
+        public static DataTable ObterQuantidadeEnt(string nome)
+        {
+            DataTable dt = new DataTable();
+            using (var cmd = ConexaoBanco().CreateCommand())
+            {
+                cmd.CommandText = "SELECT QUANTIDADE_ENT FROM tb_entrada WHERE MERCADORIA_ENT = '" + nome + "'";
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter(cmd.CommandText, ConexaoBanco());
+                da.Fill(dt);
+                ConexaoBanco().Close();
+                return dt;
+            }
+        }  
     }
 }
