@@ -1,47 +1,54 @@
 ﻿@using System.Data;
 @model GetDataModel
 @{
-    ViewData["Title"] = "Entrada de produtos";
+	ViewData["Title"] = "Entrada de produtos";
 }
 
+@if (Model.MercadoriasModel.Rows.Count == 0 || Model.MercadoriasModel.Rows == null)
+{
+	<h2 class="text-center text-secondary mt-5">Sem mercadorias cadastradas no momentos.</h2>
+}
+else
+{
 
-<form id="form-entrada" class="w-25" method="post" action="Entrar">
-    <div class="form-group">
-        <label for="quantidade">Quantidade</label>
-        <input type="number" class="form-control" name="quantidade" id="quantidade-ent" placeholder="Quantidades de produto">
-    </div>
-    <div class="w-100 d-flex">
-		<div>
-			<label for="dia">Dia</label>
-			<input type="number" class="form-control" name="dia" id="dia-ent" placeholder="Dia">
+	<form id="form-entrada" class="w-25" method="post" action="Entrar">
+		<div class="form-group">
+			<label for="quantidade">Quantidade</label>
+			<input type="number" class="form-control" name="quantidade" id="quantidade-ent" placeholder="Quantidades de produto">
 		</div>
-        <div class="form-group">
-			<label for="mes">Mês</label>
-			<input type="number" class="form-control" name="mes" id="mes-ent" placeholder="01,02,03">
+		<div class="w-100 d-flex">
+			<div>
+				<label for="dia">Dia</label>
+				<input type="number" class="form-control" name="dia" id="dia-ent" placeholder="Dia">
+			</div>
+			<div class="form-group">
+				<label for="mes">Mês</label>
+				<input type="number" class="form-control" name="mes" id="mes-ent" placeholder="01,02,03">
+			</div>
+			<div class="form-group">
+				<label for="ano">Ano</label>
+				<input type="number" class="form-control" name="ano" id="ano-ent" placeholder="Ano">
+			</div>
 		</div>
-        <div class="form-group">
-			<label for="ano">Ano</label>
-			<input type="number" class="form-control" name="ano" id="ano-ent" placeholder="Ano">
+
+		<div class="form-group">
+			<label for="hora">Hora</label>
+			<input type="text" class="form-control" name="hora" id="hora-ent" placeholder="HH:MM">
 		</div>
-    </div>
-    
-    <div class="form-group">
-        <label for="hora">Hora</label>
-        <input type="text" class="form-control" name="hora" id="hora-ent" placeholder="HH:MM">
-    </div>
-    <div class="form-group">
-        <label for="local">Local</label>
-        <input type="text" class="form-control" name="local" id="local-ent" placeholder="Local">
-    </div>
-    <div class="form-group">
-		<label for="select">Selecione o produto</label>
-		<select name="mercadoria" id="select" class="form-select">
-            @foreach (DataRow row in Model.MercadoriasModel.Rows)
-            {
-                <option value=@row["NOME"]>@row["NOME"]</option>
-            }
-		</select>
-    </div>
-    
-    <button id="btn-entrar-produto" type="submit" class="btn btn-primary mt-1">Entrar produto</button>
-</form>
+		<div class="form-group">
+			<label for="local">Local</label>
+			<input type="text" class="form-control" name="local" id="local-ent" placeholder="Local">
+		</div>
+		<div class="form-group">
+			<label for="select">Selecione o produto</label>
+			<select name="mercadoria" id="select" class="form-select">
+				@foreach (DataRow row in Model.MercadoriasModel.Rows)
+				{
+					<option value=@row["NOME"]>@row["NOME"]</option>
+				}
+			</select>
+		</div>
+
+		<button id="btn-entrar-produto" type="submit" class="btn btn-primary mt-1">Entrar produto</button>
+	</form>
+}

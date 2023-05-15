@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using processo_estágio.BancoDeDados.Entrada;
 using processo_estágio.BancoDeDados.Mercadorias;
+using processo_estágio.BancoDeDados.QuantidadeTotal;
 using processo_estágio.BancoDeDados.Saida;
 using processo_estágio.Models;
 using System.Data;
@@ -24,10 +25,12 @@ namespace processo_estágio.Controllers
         }
 
         // CHAMA A VIEW DE CONFIRMAÇÃO DE EXCLUSÃO DE MERCADORIA
-        public ActionResult Deletar(string id)
+        public ActionResult Deletar(string id, string nome)
         {
 
             GetDataModel.idDeletarMercadoria = id;
+
+            GetDataModel.nomeQuantidadeTotal = nome;
 
             return RedirectToAction("ConfirmarExclusao");
         }
@@ -42,6 +45,8 @@ namespace processo_estágio.Controllers
         public ActionResult Exclusao()
         {
             DatabaseMercadorias.DeletarDados(GetDataModel.idDeletarMercadoria);
+
+            DatabaseQuantidadeTotal.DeletarDados(GetDataModel.nomeQuantidadeTotal);
 
             return RedirectToAction("Index");
         }
@@ -66,6 +71,8 @@ namespace processo_estágio.Controllers
             DatabaseEntrada.AtualizarNomeMercadoria(nome, nomeAntigo);
 
             DatabaseSaida.AtualizarNomeMercadoria(nome, nomeAntigo);
+
+            DatabaseQuantidadeTotal.AtualizarNome(nome, nomeAntigo);
 
             return RedirectToAction("Index");
         }

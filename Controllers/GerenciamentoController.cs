@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using processo_estágio.BancoDeDados.Entrada;
 using processo_estágio.BancoDeDados.Mercadorias;
+using processo_estágio.BancoDeDados.QuantidadeTotal;
 using processo_estágio.BancoDeDados.Saida;
 using processo_estágio.Models;
 using System.Data;
@@ -44,7 +45,7 @@ namespace processo_estágio.Controllers
             if (nome != null && fabricante != null && tipo != null && descricao != null)
             {
                 DatabaseMercadorias.InserirDados(nome, fabricante, tipo, descricao);
-
+                DatabaseQuantidadeTotal.InserirDados(nome);
             }
 
             return RedirectToAction("Index");
@@ -54,9 +55,16 @@ namespace processo_estágio.Controllers
         public ActionResult Entrar(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
 
+            DataTable QntdAtual = DatabaseQuantidadeTotal.ObterQuantidadeAtual(mercadoria);
+
+            int valorAtual = Convert.ToInt32(QntdAtual.Rows[0].ItemArray[0]);
+
+            int novoValor = valorAtual + int.Parse(quantidade);
+
             if (quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
             {
                 DatabaseEntrada.InserirDados(quantidade, dia, mes, ano, hora, local, mercadoria);
+                DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor, mercadoria);
             }
 
 
@@ -67,24 +75,18 @@ namespace processo_estágio.Controllers
         public ActionResult Sair(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
 
-            DataTable dados = DatabaseEntrada.ObterQuantidadeEnt(mercadoria);
+            DataTable dados = DatabaseQuantidadeTotal.ObterQuantidadeAtual(mercadoria);
 
-            int quantidadeTotal = 0;
+            int quantidadeTotal = Convert.ToInt32(dados.Rows[0].ItemArray[0]);
 
-            if (dados.Rows.Count != 0 || dados != null)
+            int novoValor = quantidadeTotal - int.Parse(quantidade);
+
+            if (Convert.ToInt32(quantidade) <= quantidadeTotal && Convert.ToInt32(quantidade) >= 0)
             {
-                for (int i = 0; i < dados.Rows.Count; i++)
-                {
-                    quantidadeTotal += Convert.ToInt32(dados.Rows[i].ItemArray[0]);
-                }
-            }
-
-            if (Convert.ToInt32(quantidade) < quantidadeTotal)
-            {
-
                 if (quantidade != null && dia != null && mes != null && ano != null && hora != null && local != null && mercadoria != null)
                 {
                     DatabaseSaida.InserirDados(quantidade, dia, mes, ano, hora, local, mercadoria);
+                    DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor,mercadoria);
                 }
 
                 return RedirectToAction("Index");

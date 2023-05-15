@@ -34,5 +34,7 @@ namespace processo_estágio.Models
 
         // MODELO USADO PARA PASSAR OS DADOS QUE SERÃO ATUALIZADOS PARA O CAMPO DE FORMULARIO DE EDIÇÃO DE SAIDA
         public static DataTable DadosHistoricoSaidaAtt { get; set; }
+
+        public static string nomeQuantidadeTotal { get; set; }
     }
 }

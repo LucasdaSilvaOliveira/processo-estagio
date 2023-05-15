@@ -1,34 +1,53 @@
 ﻿@using System.Data;
+@using processo_estágio.BancoDeDados.QuantidadeTotal;
 @model GetDataModel
 @{
-    ViewData["Title"] = "Início";
+	ViewData["Title"] = "Início";
+
+	DataTable dadosQuantidade = DatabaseQuantidadeTotal.ObterDados();
 }
 
-<div class="text-center">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">N° Registro</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Fabricante</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (DataRow row in Model.MercadoriasModel.Rows)
-            {
-                <tr>
-                    @foreach (var cell in row.ItemArray)
-                    {
-                        <td>@cell</td>
-                    }
-                    <td class="d-flex gap-2">
-                        <a class="btn btn-outline-primary" href="Home/FormAtualizar/@row["ID_MERC"]">Editar</a>
-                        <a class="btn btn-outline-danger" href="@Url.Action("Deletar", new { id = row["ID_MERC"] })">Deletar</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-</div>
+@if (Model.MercadoriasModel.Rows.Count == 0 || Model.MercadoriasModel.Rows == null)
+{
+	<h2 class="text-center text-secondary mt-5">Sem mercadorias cadastradas no momentos.</h2>
+}
+else
+{
+	<div class="text-center">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">N° Registro</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Fabricante</th>
+					<th scope="col">Tipo</th>
+					<th scope="col">Quantidade</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (DataRow row in Model.MercadoriasModel.Rows)
+				{
+					<tr>
+						@foreach (var cell in row.ItemArray)
+						{
+							<td>@cell</td>
+						}
+						@foreach(DataRow rowQT in dadosQuantidade.Rows)
+						{
+							@if(row["NOME"].ToString() == rowQT["MERCADORIA_QT"].ToString())
+							{
+								<td>@rowQT["QUANTIDADE_TOTAL"].ToString()</td>
+							}
+						}
+						<td class="d-flex gap-2">
+							<a class="btn btn-outline-primary" href="Home/FormAtualizar/@row["ID_MERC"]">Editar</a>
+							<a class="btn btn-outline-danger" href="@Url.Action("Deletar", new { id = row["ID_MERC"], nome = row["NOME"] })">Deletar</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+}
