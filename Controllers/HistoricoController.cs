@@ -99,8 +99,18 @@ namespace processo_estágio.Controllers
         {
             GetDataModel.idAtualizarHistorico = id;
 
+            GetDataModel.DadosHistoricoSaidaAtt = DatabaseSaida.ObterDadosParaAtualizar(id);
 
             return View();
+        }
+
+        public ActionResult AtualizarHistoricoSaida(int quantidade, int dia, int mes, int ano, string hora, string local)
+        {
+            DatabaseSaida.AtualizarHistoricoSaida(GetDataModel.idAtualizarHistorico, quantidade, dia, mes, ano, hora, local);
+            GetDataModel.MercadoriasEntradaHistorico = null;
+            GetDataModel.MercadoriasSaidaHistorico = null;
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Pdf()

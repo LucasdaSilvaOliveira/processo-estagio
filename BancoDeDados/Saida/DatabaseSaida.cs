@@ -82,5 +82,36 @@ namespace processo_estágio.BancoDeDados.Saida
                 cmd.ExecuteNonQuery();
             }
         }
-    }
+
+        public static DataTable ObterDadosParaAtualizar(int id)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (var cmd = ConexaoBanco().CreateCommand())
+                {
+                    cmd.CommandText = "SELECT QUANTIDADE_SAIDA, DIA_SAIDA, MES_SAIDA, ANO_SAIDA, HORA_SAIDA, LOCAL_SAIDA FROM tb_saida WHERE ID_SAIDA = " + id;
+
+                    SQLiteDataAdapter da = new SQLiteDataAdapter(cmd.CommandText, ConexaoBanco());
+                    da.Fill(dt);
+                    ConexaoBanco().Close();
+                    return dt;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+		public static void AtualizarHistoricoSaida(int id, int quantidade, int dia, int mes, int ano, string hora, string local)
+		{
+			using (var cmd = ConexaoBanco().CreateCommand())
+			{
+				cmd.CommandText = "UPDATE tb_saida SET QUANTIDADE_SAIDA = " + quantidade + ", DIA_SAIDA = " + dia + ", MES_SAIDA = " + mes + ", ANO_SAIDA = " + ano + ", HORA_SAIDA = '" + hora + "', LOCAL_SAIDA = '" + local + "' WHERE ID_SAIDA = " + Int32.Parse(id.ToString());
+				ConexaoBanco().Close();
+				cmd.ExecuteNonQuery();
+			}
+		}
+	}
 }
