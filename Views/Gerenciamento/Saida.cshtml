@@ -1,0 +1,45 @@
+﻿@using System.Data;
+@model GetDataModel
+@{
+    ViewData["Title"] = "Saída de produtos";
+}
+
+
+<form id="form-saida" class="w-25" method="post" action="Sair">
+    <div class="form-group">
+        <label for="quantidade">Quantidade</label>
+        <input type="number" class="form-control" name="quantidade" id="quantidade-saida" placeholder="Quantidades de produto">
+    </div>
+    <div class="w-100 d-flex">
+        <div>
+            <label for="dia">Dia</label>
+            <input type="number" class="form-control" name="dia" id="dia-saida" placeholder="Dia">
+        </div>
+        <div class="form-group">
+            <label for="mes">Mês</label>
+            <input type="number" class="form-control" name="mes" id="mes-saida" placeholder="01,02,03">
+        </div>
+        <div class="form-group">
+            <label for="ano">Ano</label>
+            <input type="number" class="form-control" name="ano" id="ano-saida" placeholder="Ano">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="hora">Hora</label>
+        <input type="text" class="form-control" name="hora" id="hora-saida" placeholder="HH:MM">
+    </div>
+    <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" class="form-control" name="local" id="local-saida" placeholder="Local">
+    </div>
+    <div class="form-group">
+        <label for="select">Selecione o produto</label>
+        <select name="mercadoria" id="select" class="form-select">
+            @foreach (DataRow row in Model.MercadoriasModel.Rows)
+            {
+                <option value=@row["NOME"]>@row["NOME"]</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-1">Retirar produto</button>
+</form>

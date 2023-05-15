@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Gerenciar produtos";
+}
+
+<h1 class="display-5 text-secondary mb-5">Adicionar mercadoria</h1>
+
+<form id="form-cadastro" class="w-25" method="post" action="Gerenciamento/Adicionar">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do produto">
+    </div>
+    <div class="form-group">
+        <label for="fabricante">Fabricante</label>
+        <input type="text" class="form-control" name="fabricante" id="fabricante" placeholder="Nome do fabricante">
+    </div>
+    <div class="form-group">
+        <label for="tipo">Tipo</label>
+        <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo do produto">
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <textarea type="text" class="form-control" name="descricao" id="descricao" placeholder="Nome do fabricante"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-1">Cadastrar</button>
+</form>
+
+<div class="mt-4">
+    <a class="btn btn-secondary" asp-controller="Gerenciamento" asp-action="Entrada">Entrada de produtos</a>
+    <a class="btn btn-secondary" asp-controller="Gerenciamento" asp-action="Saida">Saída de produtos</a>
+</div>
+

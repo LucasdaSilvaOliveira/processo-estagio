@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Confirmar exclusão";
+}
+
+<h1 class="display-4 text-secondary">Confirma excluir esse histórico de entrada?</h1>
+
+<form action="@Url.Action("ExcHistoricoEnt", "Historico")">
+    <button class="btn btn-outline-primary w-25">Confirmar</button>
+</form>
+<form action="@Url.Action("Index", "Historico")">
+    <button class="btn btn-outline-danger w-25 mt-1">Cancelar</button>
+</form>

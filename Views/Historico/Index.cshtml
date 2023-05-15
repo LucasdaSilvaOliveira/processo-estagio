@@ -1,0 +1,121 @@
+﻿@using System.Data;
+@using processo_estágio.BancoDeDados.Entrada;
+@model GetDataModel
+@{
+    ViewData["Title"] = "Histórico dos produtos";
+
+}
+
+
+	<div class="mb-5">
+		<h1 class="text-secondary display-4">Histórico de Entrada</h1>
+		<form method="get" action="Historico/ObterDadosEntrada">
+			<div class="w-50 d-flex">
+				<select name="mercadoria" class="form-select w-50 mt-5 mb-5">
+					@foreach (DataRow row in Model.MercadoriasModel.Rows)
+					{
+						<option value=@row["NOME"]>@row["NOME"]</option>
+					}
+				</select>
+			</div>
+			<button class="btn btn-secondary w-25 mb-5">Pesquisar</button>
+		</form>
+		<table class="table table-primary w-100">
+			<thead>
+				<tr class="table-primary">
+					<th class="table-primary">N° Registro</th>
+					<th class="table-primary">Quantidade Entrada</th>
+					<th class="table-primary">Dia</th>
+					<th class="table-primary">Mês</th>
+					<th class="table-primary">Ano</th>
+					<th class="table-primary">Data</th>
+					<th class="table-primary">Local</th>
+					<th class="table-primary">Mercadoria</th>
+					<th class="table-primary"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (GetDataModel.MercadoriasEntradaHistorico != null)
+				{
+					if (GetDataModel.MercadoriasEntradaHistorico.Rows.Count > 0)
+					{
+						@foreach (DataRow row in GetDataModel.MercadoriasEntradaHistorico.Rows)
+						{
+							<tr>
+								@foreach (var cell in row.ItemArray)
+								{
+									<td>@cell</td>
+								}
+								<td>
+									<a class="btn btn-outline-primary">Editar</a>
+								<a class="btn btn-outline-danger" href="@Url.Action("HistoricoConfirmarExc", new { id = row["ID_ENT"]})">Deletar</a>
+								</td>
+							</tr>
+						}
+					}
+					else
+					{
+						<p>Sem movimentações de entrada desse produto.</p>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+
+<div class="mb-5">
+		<h1 class="text-secondary display-4">Histórico de Saída</h1>
+		<form method="get" action="Historico/ObterDadosSaidaSegundo">
+			<div class="w-50 d-flex">
+				<select name="mercadoria" class="form-select w-50 mt-5 mb-5">
+					@foreach (DataRow row in Model.MercadoriasModel.Rows)
+					{
+						<option value=@row["NOME"]>@row["NOME"]</option>
+					}
+				</select>
+			</div>
+			<button class="btn btn-secondary w-25 mb-5">Pesquisar</button>
+		</form>
+		<table class="table table-primary w-100">
+			<thead>
+				<tr class="table-primary">
+					<th class="table-primary">N° Registro</th>
+					<th class="table-primary">Quantidade Entrada</th>
+					<th class="table-primary">Dia</th>
+					<th class="table-primary">Mês</th>
+					<th class="table-primary">Ano</th>
+					<th class="table-primary">Data</th>
+					<th class="table-primary">Local</th>
+					<th class="table-primary">Mercadoria</th>
+					<th class="table-primary"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (GetDataModel.MercadoriasSaidaHistorico != null)
+				{
+					if (GetDataModel.MercadoriasSaidaHistorico.Rows.Count > 0)
+					{
+						@foreach (DataRow row in GetDataModel.MercadoriasSaidaHistorico.Rows)
+						{
+							<tr>
+								@foreach (var cell in row.ItemArray)
+								{
+									<td>@cell</td>
+								}
+							<td>
+								<a class="btn btn-outline-primary">Editar</a>
+								<a class="btn btn-outline-danger" href="@Url.Action("ConfirmarExcSaida", new { id = row["ID_SAIDA"]})">Deletar</a>
+							</td>
+							</tr>
+						}
+					}
+					else
+					{
+						<p>Sem movimentações de saída desse produto.</p>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+
+
+<a class="btn btn-danger mt-5" href="@Url.Action("Pdf")">Gerar relatório</a>
