@@ -122,6 +122,7 @@ namespace processo_estágio.BancoDeDados.Entrada
             }
         }
 
+        // NOME DA MERCADORIA NO REGISTRO TAMBÉM MUDAR QUANDO EU ALTERAR O NOME DA MERCADORIA
         public static void AtualizarNomeMercadoria(string nome, string nomeAntigo)
         {
 
