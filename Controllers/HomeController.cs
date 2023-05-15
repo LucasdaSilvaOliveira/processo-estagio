@@ -22,6 +22,7 @@ namespace processo_estágio.Controllers
             return View(model);
         }
 
+        // CHAMA A VIEW DE CONFIRMAÇÃO DE EXCLUSÃO DE MERCADORIA
         public ActionResult Deletar(string id)
         {
 
@@ -29,16 +30,22 @@ namespace processo_estágio.Controllers
 
             return RedirectToAction("ConfirmarExclusao");
         }
+
+        // VIEW CONFIRMAR EXCLUSÃO
         public ActionResult ConfirmarExclusao()
         {
             return View();
         }
+
+        // CHAMA MÉTODO DE EXCLUSÃO DE DADOS
         public ActionResult Exclusao()
         {
             DatabaseMercadorias.DeletarDados(GetDataModel.idDeletarMercadoria);
 
             return RedirectToAction("Index");
         }
+
+        // CHAMA VIEW DO FORMULÁRIO DE EDIÇÃO DE MERCADORIAS
         public IActionResult FormAtualizar(int id)
         {
             GetDataModel.idAtualizarMercadoria = id;
@@ -48,6 +55,7 @@ namespace processo_estágio.Controllers
             return View();
         }
 
+        // ATUALIZA OS DADOS DA MERCADORIA SELECIONADA
         [HttpPost]
         public ActionResult AtualizarDados(string nome, string fabricante, string tipo)
         {

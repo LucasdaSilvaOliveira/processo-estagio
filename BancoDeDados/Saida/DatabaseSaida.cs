@@ -12,6 +12,7 @@ namespace processo_estágio.BancoDeDados.Saida
             return conexao;
         }
 
+        // PEGANDO DADOS PARA SOLICITAÇÃO DO HISTÓRICO DE SAIDA DA MERCADORIA SELECIONADA
         public static DataTable ObterDadosHistorico(string mercadoria)
         {
             DataTable dt = new DataTable();
@@ -34,6 +35,7 @@ namespace processo_estágio.BancoDeDados.Saida
             }
         }
 
+        // CADASTRAR SAIDA DE UM DETERMINADO PRODUTO
         public static void InserirDados(string quantidade, string dia,string mes,string ano, string hora, string local, string mercadoria)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
@@ -51,7 +53,8 @@ namespace processo_estágio.BancoDeDados.Saida
             }
         }
 
-		public static DataTable ObterDadosRelatorioSaida()
+        // PEGANDO DADOS DA SAIDA DE MERCADORIAS PARA COLOCAR NO PDF GERADO PARA O RELATÓRIO(AQUI ESTÁ ORDERNADO POR MÊS)
+        public static DataTable ObterDadosRelatorioSaida()
 		{
 			DataTable dt = new DataTable();
 
@@ -73,6 +76,7 @@ namespace processo_estágio.BancoDeDados.Saida
 			}
 		}
 
+        // EXCLUSÃO DO REGISTRO DE SAIDA
         public static void DeletarHistoricoSaida(string id)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
@@ -83,6 +87,7 @@ namespace processo_estágio.BancoDeDados.Saida
             }
         }
 
+        //PEGANDO DADOS PARA COLOCAR NOS VALORES DOS CAMPOS DE FORMULÁRIO DE EDIÇÃO DE SAIDA
         public static DataTable ObterDadosParaAtualizar(int id)
         {
             DataTable dt = new DataTable();
@@ -104,7 +109,9 @@ namespace processo_estágio.BancoDeDados.Saida
                 throw;
             }
         }
-		public static void AtualizarHistoricoSaida(int id, int quantidade, int dia, int mes, int ano, string hora, string local)
+
+        // ATUALIZANDO REGISTRO DE SAIDA
+        public static void AtualizarHistoricoSaida(int id, int quantidade, int dia, int mes, int ano, string hora, string local)
 		{
 			using (var cmd = ConexaoBanco().CreateCommand())
 			{

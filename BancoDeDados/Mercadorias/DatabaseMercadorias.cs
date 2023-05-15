@@ -12,6 +12,7 @@ namespace processo_estágio.BancoDeDados.Mercadorias
             return conexao;
         }
 
+        // PEGANDO DADOS PARA: TABELAS DE PRODUTOS E DropDownList DOS CAMPOS NECESSÁRIOS
         public static DataTable ObterDados()
         {
             DataTable dt = new DataTable();
@@ -32,6 +33,8 @@ namespace processo_estágio.BancoDeDados.Mercadorias
                 throw;
             }
         }
+
+        // PEGANDO DADOS PARA PREENCHER OS CAMPOS DE FORMULÁRIO DE EDIÇÃO
         public static DataTable ObterDadosParaAtualizacao(int id)
         {
             DataTable dt = new DataTable();
@@ -53,6 +56,18 @@ namespace processo_estágio.BancoDeDados.Mercadorias
             }
         }
 
+        // ATUALIZAÇÃO DOS DADOS DA MERCADORIA
+        public static void AtualizarDados(int id, string nome, string fabricante, string tipo)
+        {
+            using (var cmd = ConexaoBanco().CreateCommand())
+            {
+                cmd.CommandText = "UPDATE tb_mercadorias SET NOME = '" + nome + "', FABRICANTE = '" + fabricante + "', TIPO = '" + tipo + "' WHERE ID_MERC = " + Int32.Parse(id.ToString());
+                ConexaoBanco().Close();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // INSERINDO DADOS
         public static void InserirDados(string nome, string fabricante, string tipo, string descricao)
         {
             using(var cmd = ConexaoBanco().CreateCommand())
@@ -67,6 +82,7 @@ namespace processo_estágio.BancoDeDados.Mercadorias
             }
         }
 
+        // DELETANDO DADOS
         public static void DeletarDados(string id)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
@@ -76,14 +92,6 @@ namespace processo_estágio.BancoDeDados.Mercadorias
                 cmd.ExecuteNonQuery();
             }
         }
-        public static void AtualizarDados(int id, string nome, string fabricante, string tipo)
-        {
-            using (var cmd = ConexaoBanco().CreateCommand())
-            {
-                cmd.CommandText = "UPDATE tb_mercadorias SET NOME = '"+nome+"', FABRICANTE = '"+fabricante+"', TIPO = '"+tipo+"' WHERE ID_MERC = " + Int32.Parse(id.ToString());
-                ConexaoBanco().Close();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        
     }
 }

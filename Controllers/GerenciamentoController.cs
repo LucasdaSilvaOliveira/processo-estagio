@@ -26,6 +26,7 @@ namespace processo_estágio.Controllers
 
             return View(model);
         }
+
         public IActionResult Saida()
         {
             GetDataModel model = new GetDataModel();
@@ -35,6 +36,7 @@ namespace processo_estágio.Controllers
             return View(model);
         }
 
+        // ACTION CHAMANDO MÉTODO DO BANCO DE DADOS DA MERCADORIA PARA INSERIR DADOS NA TABELA
         public ActionResult Adicionar(string nome, string fabricante, string tipo, string descricao)
         {
 
@@ -47,6 +49,7 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
         }
 
+        // ACTION CHAMANDO MÉTODO DO BANCO DE DADOS DA ENTRADA PARA INSERIR DADOS NA TABELA
         public ActionResult Entrar(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
 
@@ -58,6 +61,8 @@ namespace processo_estágio.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // ACTION CHAMANDO MÉTODO DO BANCO DE DADOS DA SAIDA PARA INSERIR DADOS NA TABELA
         public ActionResult Sair(string quantidade, string dia,string mes, string ano, string hora, string local, string mercadoria)
         {
 

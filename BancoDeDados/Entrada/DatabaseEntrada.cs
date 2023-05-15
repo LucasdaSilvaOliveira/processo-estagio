@@ -13,6 +13,7 @@ namespace processo_estágio.BancoDeDados.Entrada
             return conexao;
         }
 
+        // PEGANDO DADOS PARA SOLICITAÇÃO DO HISTÓRICO DE ENTRADA DA MERCADORIA SELECIONADA
         public static DataTable ObterDadosHistorico(string mercadoria)
         {
             DataTable dt = new DataTable();
@@ -35,6 +36,7 @@ namespace processo_estágio.BancoDeDados.Entrada
             }
         }
 
+        // CADASTRAR ENTRADA DE UM DETERMINADO PRODUTO
         public static void InserirDados(string quantidade, string dia, string mes, string ano, string hora, string local, string mercadoria)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
@@ -52,6 +54,7 @@ namespace processo_estágio.BancoDeDados.Entrada
             }
         }
 
+        // PEGANDO DADOS DA ENTRADA DE MERCADORIAS PARA COLOCAR NO PDF GERADO PARA O RELATÓRIO(AQUI ESTÁ ORDERNADO POR MÊS)
         public static DataTable ObterDadosRelatorioEntrada()
         {
 			DataTable dt = new DataTable();
@@ -74,6 +77,7 @@ namespace processo_estágio.BancoDeDados.Entrada
 			}
 		}
 
+        // EXCLUSÃO DO REGISTRO DE ENTRADA
         public static void DeletarHistoricoEntrada(string id)
         {
 			using (var cmd = ConexaoBanco().CreateCommand())
@@ -84,6 +88,7 @@ namespace processo_estágio.BancoDeDados.Entrada
 			}
 		}
 
+        //PEGANDO DADOS PARA COLOCAR NOS VALORES DOS CAMPOS DE FORMULÁRIO DE EDIÇÃO DE ENTRADA
 		public static DataTable ObterDadosParaAtualizar(int id)
 		{
 			DataTable dt = new DataTable();
@@ -106,6 +111,7 @@ namespace processo_estágio.BancoDeDados.Entrada
 			}
 		}
 
+        // ATUALIZANDO REGISTRO DE ENTRADA
         public static void AtualizarHistoricoEnt(int id, int quantidade, int dia, int mes, int ano, string hora, string local)
         {
             using (var cmd = ConexaoBanco().CreateCommand())

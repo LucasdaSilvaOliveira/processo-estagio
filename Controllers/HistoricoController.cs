@@ -21,6 +21,7 @@ namespace processo_estágio.Controllers
             return View(model);
         }
 
+        // CHAMA UM MÉTODO DO BANCO DE DADOS DA ENTRADA PARA OBTER OS DADOS DE UM DETERMINADA MERCADORIA
         public ActionResult ObterDadosEntrada(string mercadoria)
         {
 
@@ -32,7 +33,8 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
 
         }
-        
+
+        // CHAMA UM MÉTODO DO BANCO DE DADOS DA SAIDA PARA OBTER OS DADOS DE UM DETERMINADA MERCADORIA
         public ActionResult ObterDadosSaidaSegundo(string mercadoria)
         {
 
@@ -44,6 +46,7 @@ namespace processo_estágio.Controllers
 
         }
 
+        //CHAMA A VIEW DE CONFIRMAÇÃO DE EXCLUSÃO DA ENTRADA, PASSANDO O ID
         public ActionResult HistoricoConfirmarExc(string id)
         {
 
@@ -51,6 +54,7 @@ namespace processo_estágio.Controllers
             return View();
         }
 
+        // CHAMA MÉTODO PARA EXCLUSÃO DE REGISTRO DE UM ITEM DO BANCO DE DADOS DA ENTRADA
         public ActionResult ExcHistoricoEnt()
         {
             DatabaseEntrada.DeletarHistoricoEntrada(GetDataModel.idDeletarHistorico);
@@ -61,12 +65,14 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
         }
 
+        //CHAMA A VIEW DE CONFIRMAÇÃO DE EXCLUSÃO DA SAIDA, PASSANDO O ID
         public ActionResult ConfirmarExcSaida(string id)
         {
             GetDataModel.idDeletarHistorico = id;
             return View();
         }
 
+        // CHAMA MÉTODO PARA EXCLUSÃO DE REGISTRO DE UM ITEM DO BANCO DE DADOS DA SAIDA
         public ActionResult HistoricoSaidaExc()
         {
             DatabaseSaida.DeletarHistoricoSaida(GetDataModel.idDeletarHistorico);
@@ -76,6 +82,7 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
         }
 
+        // CHAMA O FORMULÁRIO DE EDIÇÃO DA ENTRADA
         public ActionResult AttHistoricoEntrada(int id)
         {
 
@@ -86,6 +93,7 @@ namespace processo_estágio.Controllers
             return View();
         }
 
+        // ATUALIZA O REGISTRO DE ENTRADA
         public ActionResult AtualizarHistoricoEnt(int quantidade, int dia, int mes, int ano, string hora, string local)
         {
 
@@ -95,6 +103,8 @@ namespace processo_estágio.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // CHAMA O FORMULÁRIO DE EDIÇÃO DA SAIDA
         public ActionResult AttHistoricoSaida(int id)
         {
             GetDataModel.idAtualizarHistorico = id;
@@ -104,6 +114,7 @@ namespace processo_estágio.Controllers
             return View();
         }
 
+        // ATUALIZA O REGISTRO DE SAIDA
         public ActionResult AtualizarHistoricoSaida(int quantidade, int dia, int mes, int ano, string hora, string local)
         {
             DatabaseSaida.AtualizarHistoricoSaida(GetDataModel.idAtualizarHistorico, quantidade, dia, mes, ano, hora, local);
@@ -113,6 +124,7 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
         }
 
+        // MÉTODO QUE GERA O PDF
         public ActionResult Pdf()
         {
 
