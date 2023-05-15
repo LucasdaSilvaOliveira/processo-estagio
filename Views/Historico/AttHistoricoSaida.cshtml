@@ -6,7 +6,7 @@
 
 @foreach(DataRow row in GetDataModel.DadosHistoricoSaidaAtt.Rows)
 {
-    <form class="w-25" method="post" action="@Url.Action("AtualizarHistoricoSaida", "Historico")">
+    <form id="form-saida-att" class="w-25" method="post" action="@Url.Action("AtualizarHistoricoSaida", "Historico")">
         <div class="form-group">
             <label for="quantidade">Quantidade</label>
             <input value="@HttpUtility.HtmlDecode(row["QUANTIDADE_SAIDA"].ToString())" type="number" class="form-control" name="quantidade" id="quantidade-saida-att" placeholder="Quantidades de produto">

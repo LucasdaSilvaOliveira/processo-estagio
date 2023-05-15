@@ -9,18 +9,18 @@
 @foreach(DataRow row in dados.Rows)
 {
     
-    <form id="form-cadastro" class="w-25" method="post" action="@Url.Action("AtualizarDados", "Home")">
+    <form id="form-att" class="w-25" method="post" action="@Url.Action("AtualizarDados", "Home")">
     <div class="form-group">
         <label for="nome">Nome</label>
-            <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[0]?.ToString())" type="text" class="form-control" name="nome" id="nome" placeholder="Nome do produto">
+        <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[0]?.ToString())" type="text" class="form-control" name="nome" id="nome-att" placeholder="Nome do produto">
     </div>
     <div class="form-group">
         <label for="fabricante">Fabricante</label>
-            <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[1]?.ToString())" type="text" class="form-control" name="fabricante" id="fabricante" placeholder="Nome do fabricante">
+        <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[1]?.ToString())" type="text" class="form-control" name="fabricante" id="fabricante-att" placeholder="Nome do fabricante">
     </div>
     <div class="form-group">
         <label for="tipo">Tipo</label>
-            <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[2]?.ToString())" type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo do produto">
+        <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[2]?.ToString())" type="text" class="form-control" name="tipo" id="tipo-att" placeholder="Tipo do produto">
     </div>
     <a class="btn btn-secondary" href="@Url.Action("Index")">Voltar</a>
     <button type="submit" class="btn btn-primary mt-1">Atualizar</button>
