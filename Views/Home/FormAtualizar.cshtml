@@ -9,7 +9,8 @@
 @foreach(DataRow row in dados.Rows)
 {
     
-    <form id="form-att" class="w-25" method="post" action="@Url.Action("AtualizarDados", "Home")">
+    <form id="form-att" class="w-25" method="post" action="@Url.Action("AtualizarDadosHome", "Home")">
+        <input class="d-none" value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[0]?.ToString())" name="nomeAntigo">
     <div class="form-group">
         <label for="nome">Nome</label>
         <input value="@HttpUtility.HtmlDecode(dados.Rows[0].ItemArray[0]?.ToString())" type="text" class="form-control" name="nome" id="nome-att" placeholder="Nome do produto">

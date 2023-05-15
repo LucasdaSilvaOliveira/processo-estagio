@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using processo_estágio.BancoDeDados.Entrada;
 using processo_estágio.BancoDeDados.Mercadorias;
+using processo_estágio.BancoDeDados.Saida;
 using processo_estágio.Models;
 using System.Data;
 using System.Diagnostics;
@@ -57,13 +58,18 @@ namespace processo_estágio.Controllers
 
         // ATUALIZA OS DADOS DA MERCADORIA SELECIONADA
         [HttpPost]
-        public ActionResult AtualizarDados(string nome, string fabricante, string tipo)
+        public ActionResult AtualizarDadosHome(string nome, string fabricante, string tipo, string nomeAntigo)
         {
 
             DatabaseMercadorias.AtualizarDados(GetDataModel.idAtualizarMercadoria, nome, fabricante, tipo);
 
+            DatabaseEntrada.AtualizarNomeMercadoria(nome, nomeAntigo);
+
+            DatabaseSaida.AtualizarNomeMercadoria(nome, nomeAntigo);
+
             return RedirectToAction("Index");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

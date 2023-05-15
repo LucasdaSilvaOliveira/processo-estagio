@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SQLite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace processo_estágio.BancoDeDados.Mercadorias
 {
@@ -59,12 +60,12 @@ namespace processo_estágio.BancoDeDados.Mercadorias
         // ATUALIZAÇÃO DOS DADOS DA MERCADORIA
         public static void AtualizarDados(int id, string nome, string fabricante, string tipo)
         {
-            using (var cmd = ConexaoBanco().CreateCommand())
-            {
-                cmd.CommandText = "UPDATE tb_mercadorias SET NOME = '" + nome + "', FABRICANTE = '" + fabricante + "', TIPO = '" + tipo + "' WHERE ID_MERC = " + Int32.Parse(id.ToString());
-                ConexaoBanco().Close();
-                cmd.ExecuteNonQuery();
-            }
+                using (var cmd = ConexaoBanco().CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE tb_mercadorias SET NOME = '" + nome + "', FABRICANTE = '" + fabricante + "', TIPO = '" + tipo + "' WHERE ID_MERC = " + Int32.Parse(id.ToString());
+                    ConexaoBanco().Close();
+                    cmd.ExecuteNonQuery();
+                }
         }
 
         // INSERINDO DADOS

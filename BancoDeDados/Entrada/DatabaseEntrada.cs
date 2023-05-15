@@ -121,5 +121,15 @@ namespace processo_estágio.BancoDeDados.Entrada
                 cmd.ExecuteNonQuery();
             }
         }
-	}
+
+        public static void AtualizarNomeMercadoria(string nome, string nomeAntigo)
+        {
+
+            var cmd = ConexaoBanco().CreateCommand();
+            cmd.CommandText = "UPDATE tb_entrada SET MERCADORIA_ENT = '" + nome + "' WHERE MERCADORIA_ENT = '" + nomeAntigo + "'";
+            ConexaoBanco().Close();
+            cmd.ExecuteNonQuery();
+
+        }
+    }
 }
