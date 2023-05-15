@@ -1,0 +1,43 @@
+﻿@using System.Data;
+@using System.Web;
+@{
+    ViewData["Title"] = "Formulário de Atualização";
+
+}
+
+@foreach(DataRow row in GetDataModel.DadosHistoricoEntAtt.Rows)
+{
+    <form class="w-25" method="post" action="@Url.Action("AtualizarHistoricoEnt", "Historico")">
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input value="@HttpUtility.HtmlDecode(row["QUANTIDADE_ENT"].ToString())" type="number" class="form-control" name="quantidade" id="quantidade-ent-att" placeholder="Quantidades de produto">
+        </div>
+        <div class="w-100 d-flex">
+            <div>
+                <label for="dia">Dia</label>
+                <input value="@HttpUtility.HtmlDecode(row["DIA_ENT"].ToString())" type="number" class="form-control" name="dia" id="dia-ent-att" placeholder="Dia">
+            </div>
+            <div class="form-group">
+                <label for="mes">Mês</label>
+                <input value="@HttpUtility.HtmlDecode(row["MES_ENT"].ToString())" type="number" class="form-control" name="mes" id="mes-ent-att" placeholder="01,02,03">
+            </div>
+            <div class="form-group">
+                <label for="ano">Ano</label>
+                <input value="@HttpUtility.HtmlDecode(row["ANO_ENT"].ToString())" type="number" class="form-control" name="ano" id="ano-ent-att" placeholder="Ano">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="hora">Hora</label>
+            <input value="@HttpUtility.HtmlDecode(row["HORA_ENT"].ToString())" type="text" class="form-control" name="hora" id="hora-ent-att" placeholder="HH:MM">
+        </div>
+        <div class="form-group">
+            <label for="local">Local</label>
+            <input value="@HttpUtility.HtmlDecode(row["LOCAL_ENT"].ToString())" type="text" class="form-control" name="local" id="local-ent-att" placeholder="Local">
+        </div>
+
+        <a class="btn btn-secondary" href="@Url.Action("Index")">Voltar</a>
+        <button type="submit" class="btn btn-primary mt-1">Atualizar</button>
+    </form>
+}
+

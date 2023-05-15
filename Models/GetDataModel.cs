@@ -12,5 +12,8 @@ namespace processo_estágio.Models
         public static int idAtualizarMercadoria { get; set; }
         public static DataTable MercadoriasAtualizacao { get; set; }
         public static string idDeletarHistorico { get; set; }
+        public static int idAtualizarHistorico { get; set; }
+        public static DataTable DadosHistoricoEntAtt { get; set; }
+        public static DataTable DadosHistoricoSaidaAtt { get; set; }
     }
 }

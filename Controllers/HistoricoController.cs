@@ -76,7 +76,32 @@ namespace processo_estágio.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AttHistoricoEntrada(int id)
+        {
 
+            GetDataModel.idAtualizarHistorico = id;
+
+           GetDataModel.DadosHistoricoEntAtt = DatabaseEntrada.ObterDadosParaAtualizar(id);
+
+            return View();
+        }
+
+        public ActionResult AtualizarHistoricoEnt(int quantidade, int dia, int mes, int ano, string hora, string local)
+        {
+
+            DatabaseEntrada.AtualizarHistoricoEnt(GetDataModel.idAtualizarHistorico,quantidade,dia,mes,ano,hora,local);
+            GetDataModel.MercadoriasEntradaHistorico = null;
+            GetDataModel.MercadoriasSaidaHistorico = null;
+
+            return RedirectToAction("Index");
+        }
+        public ActionResult AttHistoricoSaida(int id)
+        {
+            GetDataModel.idAtualizarHistorico = id;
+
+
+            return View();
+        }
 
         public ActionResult Pdf()
         {
