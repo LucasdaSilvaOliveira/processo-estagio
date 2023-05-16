@@ -15,9 +15,10 @@ namespace processo_estágio.Controllers
 		public IActionResult Index()
 		{
 
-			GetDataModel model = new GetDataModel();
-
-			model.MercadoriasModel = DatabaseMercadorias.ObterDados();
+			GetDataModel model = new()
+			{
+				MercadoriasModel = DatabaseMercadorias.ObterDados()
+			};
 
 			return View(model);
 		}
@@ -104,10 +105,11 @@ namespace processo_estágio.Controllers
 		}
 
 		// CHAMA O FORMULÁRIO DE EDIÇÃO DA ENTRADA
-		public ActionResult AttHistoricoEntrada(int id)
+		public ActionResult AttHistoricoEntrada(int id, string nome)
 		{
 
 			GetDataModel.idAtualizarHistorico = id;
+			GetDataModel.nomeMercadoriaEntradaAtualizar = nome;
 
 			GetDataModel.DadosHistoricoEntAtt = DatabaseEntrada.ObterDadosParaAtualizar(id);
 
@@ -117,6 +119,22 @@ namespace processo_estágio.Controllers
 		// ATUALIZA O REGISTRO DE ENTRADA
 		public ActionResult AtualizarHistoricoEnt(int quantidade, int dia, int mes, int ano, string hora, string local)
 		{
+			DataTable QntdEntAntiga = DatabaseEntrada.ObterQuantidadeEntEspecifica(GetDataModel.idAtualizarHistorico);
+
+			DataTable QntdTotalAtual = DatabaseQuantidadeTotal.ObterQuantidadeAtual(GetDataModel.nomeMercadoriaEntradaAtualizar);
+
+			if (Convert.ToInt32(QntdEntAntiga.Rows[0].ItemArray[0]) < quantidade)
+			{
+				int ValorDiferenca = quantidade - Convert.ToInt32(QntdEntAntiga.Rows[0].ItemArray[0]);
+				int novoValor = Convert.ToInt32(QntdTotalAtual.Rows[0].ItemArray[0]) + ValorDiferenca;
+				DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor, GetDataModel.nomeMercadoriaEntradaAtualizar);
+			} else if(Convert.ToInt32(QntdEntAntiga.Rows[0].ItemArray[0]) > quantidade)
+			{
+				int ValorDiferenca = Convert.ToInt32(QntdEntAntiga.Rows[0].ItemArray[0]) - quantidade;
+				int novoValor = Convert.ToInt32(QntdTotalAtual.Rows[0].ItemArray[0]) - ValorDiferenca;
+				DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor, GetDataModel.nomeMercadoriaEntradaAtualizar);
+			}
+
 
 			DatabaseEntrada.AtualizarHistoricoEnt(GetDataModel.idAtualizarHistorico, quantidade, dia, mes, ano, hora, local);
 			GetDataModel.MercadoriasEntradaHistorico = null;
@@ -126,9 +144,10 @@ namespace processo_estágio.Controllers
 		}
 
 		// CHAMA O FORMULÁRIO DE EDIÇÃO DA SAIDA
-		public ActionResult AttHistoricoSaida(int id)
+		public ActionResult AttHistoricoSaida(int id,string nome)
 		{
 			GetDataModel.idAtualizarHistorico = id;
+			GetDataModel.nomeMercadoriaSaidaAtualizar = nome;
 
 			GetDataModel.DadosHistoricoSaidaAtt = DatabaseSaida.ObterDadosParaAtualizar(id);
 
@@ -138,6 +157,24 @@ namespace processo_estágio.Controllers
 		// ATUALIZA O REGISTRO DE SAIDA
 		public ActionResult AtualizarHistoricoSaida(int quantidade, int dia, int mes, int ano, string hora, string local)
 		{
+
+			DataTable QntdSaidaAntiga = DatabaseSaida.ObterQuantidadeEntEspecifica(GetDataModel.idAtualizarHistorico);
+			DataTable QntdTotalAtual = DatabaseQuantidadeTotal.ObterQuantidadeAtual(GetDataModel.nomeMercadoriaSaidaAtualizar);
+
+			if (Convert.ToInt32(QntdSaidaAntiga.Rows[0].ItemArray[0]) < quantidade)
+			{
+				int ValorDiferenca = quantidade - Convert.ToInt32(QntdSaidaAntiga.Rows[0].ItemArray[0]);
+				int novoValor = Convert.ToInt32(QntdTotalAtual.Rows[0].ItemArray[0]) - ValorDiferenca;
+				DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor, GetDataModel.nomeMercadoriaSaidaAtualizar);
+
+			} else if(Convert.ToInt32(QntdSaidaAntiga.Rows[0].ItemArray[0]) > quantidade)
+			{
+				int ValorDiferenca = Convert.ToInt32(QntdSaidaAntiga.Rows[0].ItemArray[0]) - quantidade;
+				int novoValor = Convert.ToInt32(QntdTotalAtual.Rows[0].ItemArray[0]) + ValorDiferenca;
+				DatabaseQuantidadeTotal.AtualizarQuantidade(novoValor, GetDataModel.nomeMercadoriaSaidaAtualizar);
+			}
+
+
 			DatabaseSaida.AtualizarHistoricoSaida(GetDataModel.idAtualizarHistorico, quantidade, dia, mes, ano, hora, local);
 			GetDataModel.MercadoriasEntradaHistorico = null;
 			GetDataModel.MercadoriasSaidaHistorico = null;
@@ -149,32 +186,38 @@ namespace processo_estágio.Controllers
 		public ActionResult Pdf()
 		{
 
-			Document doc = new Document(PageSize.A4);
+			Document doc = new(PageSize.A4);
 			doc.SetMargins(20, 20, 30, 30);
 			doc.AddCreationDate();
 			string caminho = AppDomain.CurrentDomain.BaseDirectory + @"\pdf\" + "relatorio.pdf";
-			PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(caminho, FileMode.Create));
+			_ = PdfWriter.GetInstance(doc, new FileStream(caminho, FileMode.Create));
 
 			doc.Open();
 
-			Paragraph titulo = new Paragraph();
-			titulo.Font = new Font(Font.FontFamily.COURIER, 30);
-			titulo.Alignment = Element.ALIGN_CENTER;
+			Paragraph titulo = new()
+			{
+				Font = new Font(Font.FontFamily.COURIER, 30),
+				Alignment = Element.ALIGN_CENTER
+			};
 			titulo.Add("Relatório das Ações\n\n\n\n");
 			doc.Add(titulo);
 
-			Paragraph subtitulo1 = new Paragraph();
-			subtitulo1.Font = new Font(Font.FontFamily.COURIER, 20);
-			subtitulo1.Alignment = Element.ALIGN_CENTER;
+			Paragraph subtitulo1 = new()
+			{
+				Font = new Font(Font.FontFamily.COURIER, 20),
+				Alignment = Element.ALIGN_CENTER
+			};
 			subtitulo1.Add("Mercadorias Entrada\n\n\n\n");
 			doc.Add(subtitulo1);
-
-			Paragraph paragrafoMercEnt = new Paragraph();
-			paragrafoMercEnt.Font = new Font(Font.FontFamily.COURIER, 20);
+			_ = new
+			Paragraph()
+			{
+				Font = new Font(Font.FontFamily.COURIER, 20)
+			};
 
 			DataTable dadosEntrada = DatabaseEntrada.ObterDadosRelatorioEntrada();
 
-			PdfPTable table = new PdfPTable(7);
+			PdfPTable table = new(7);
 			table.AddCell("N° Registro");
 			table.AddCell("Mês de entrada");
 			table.AddCell("Mercadoria");
@@ -238,20 +281,24 @@ namespace processo_estágio.Controllers
 
 			doc.Add(table);
 
-			Paragraph separador = new Paragraph();
-			separador.Alignment = Element.ALIGN_CENTER;
+			Paragraph separador = new()
+			{
+				Alignment = Element.ALIGN_CENTER
+			};
 			separador.Add("------------------------------------------------\n\n\n\n");
 			doc.Add(separador);
 
-			Paragraph subtitulo2 = new Paragraph();
-			subtitulo2.Font = new Font(Font.FontFamily.COURIER, 20);
-			subtitulo2.Alignment = Element.ALIGN_CENTER;
+			Paragraph subtitulo2 = new()
+			{
+				Font = new Font(Font.FontFamily.COURIER, 20),
+				Alignment = Element.ALIGN_CENTER
+			};
 			subtitulo2.Add("Mercadorias Saída\n\n\n\n");
 			doc.Add(subtitulo2);
 
 			DataTable dadosSaida = DatabaseSaida.ObterDadosRelatorioSaida();
 
-			PdfPTable table2 = new PdfPTable(7);
+			PdfPTable table2 = new(7);
 			table2.AddCell("N° Registro");
 			table2.AddCell("Mês de saída");
 			table2.AddCell("Mercadoria");

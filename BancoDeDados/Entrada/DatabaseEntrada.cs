@@ -145,6 +145,19 @@ namespace processo_estágio.BancoDeDados.Entrada
                 ConexaoBanco().Close();
                 return dt;
             }
-        }  
+        } 
+        public static DataTable ObterQuantidadeEntEspecifica(int? id)
+        {
+            DataTable dt = new DataTable();
+            using (var cmd = ConexaoBanco().CreateCommand())
+            {
+                cmd.CommandText = "SELECT QUANTIDADE_ENT FROM tb_entrada WHERE ID_ENT = " + id;
+
+                SQLiteDataAdapter da = new SQLiteDataAdapter(cmd.CommandText, ConexaoBanco());
+                da.Fill(dt);
+                ConexaoBanco().Close();
+                return dt;
+            }
+        }
     }
 }

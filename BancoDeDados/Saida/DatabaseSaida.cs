@@ -132,13 +132,13 @@ namespace processo_estágio.BancoDeDados.Saida
 
         }
 
-
-		public static DataTable ObterQuantidadeEnt(string? nome)
+        // MÉTODO USADO NA ATUALIZAÇÃO DA QUANTIDADE TOTAL DA MERCADORIA
+		public static DataTable ObterQuantidadeEntEspecifica(int? id)
 		{
 			DataTable dt = new DataTable();
 			using (var cmd = ConexaoBanco().CreateCommand())
 			{
-				cmd.CommandText = "SELECT QUANTIDADE_SAIDA FROM tb_saida WHERE MERCADORIA_SAIDA = '" + nome + "'";
+				cmd.CommandText = "SELECT QUANTIDADE_SAIDA FROM tb_saida WHERE ID_SAIDA = " + id;
 
 				SQLiteDataAdapter da = new SQLiteDataAdapter(cmd.CommandText, ConexaoBanco());
 				da.Fill(dt);

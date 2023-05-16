@@ -47,7 +47,7 @@
 									<td>@cell</td>
 								}
 								<td>
-								<a class="btn btn-outline-primary" href="Historico/AttHistoricoEntrada/@row["ID_ENT"]">Editar</a>
+								<a class="btn btn-outline-primary" href="@Url.Action("AttHistoricoEntrada", new { id = row["ID_ENT"], nome = row["MERCADORIA_ENT"]})">Editar</a>
 								<a class="btn btn-outline-danger" href="@Url.Action("HistoricoConfirmarExc", new { id = row["ID_ENT"], nome = row["MERCADORIA_ENT"]})">Deletar</a>
 								</td>
 							</tr>
@@ -102,7 +102,8 @@
 									<td>@cell</td>
 								}
 							<td>
-								<a class="btn btn-outline-primary" href="Historico/AttHistoricoSaida/@row["ID_SAIDA"]">Editar</a>
+								@*href="Historico/AttHistoricoSaida/@row["ID_SAIDA"]"*@
+								<a class="btn btn-outline-primary" href="@Url.Action("AttHistoricoSaida", new {id = row["ID_SAIDA"], nome = row["MERCADORIA_SAIDA"]} )">Editar</a>
 								<a class="btn btn-outline-danger" href="@Url.Action("ConfirmarExcSaida", new { id = row["ID_SAIDA"], quantidade = row["QUANTIDADE_SAIDA"], nome = row["MERCADORIA_SAIDA"]})">Deletar</a>
 							</td>
 							</tr>
