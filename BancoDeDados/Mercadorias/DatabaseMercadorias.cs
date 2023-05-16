@@ -84,7 +84,7 @@ namespace processo_estágio.BancoDeDados.Mercadorias
         }
 
         // DELETANDO DADOS
-        public static void DeletarDados(string id)
+        public static void DeletarDados(string? id)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
             {

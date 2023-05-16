@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Entrada de produtos";
 }
 
-@if (Model.MercadoriasModel.Rows.Count == 0 || Model.MercadoriasModel.Rows == null)
+@if (Model.MercadoriasModel?.Rows.Count == 0 || Model.MercadoriasModel?.Rows == null)
 {
 	<h2 class="text-center text-secondary mt-5">Sem mercadorias cadastradas no momentos.</h2>
 }

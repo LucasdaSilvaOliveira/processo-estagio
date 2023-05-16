@@ -22,7 +22,7 @@ namespace processo_estágio.BancoDeDados.QuantidadeTotal
             }
         } 
 
-        public static void DeletarDados(string nome)
+        public static void DeletarDados(string? nome)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
             {
@@ -32,7 +32,7 @@ namespace processo_estágio.BancoDeDados.QuantidadeTotal
             }
         }
 
-        public static DataTable ObterQuantidadeAtual(string nome)
+        public static DataTable ObterQuantidadeAtual(string? nome)
         {
             DataTable dt = new DataTable();
 
@@ -54,7 +54,7 @@ namespace processo_estágio.BancoDeDados.QuantidadeTotal
             }
         }
 
-        public static void AtualizarQuantidade(int valorNovo, string nome)
+        public static void AtualizarQuantidade(int valorNovo, string? nome)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
             {

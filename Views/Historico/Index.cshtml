@@ -28,7 +28,7 @@
 					<th class="table-primary">Dia</th>
 					<th class="table-primary">Mês</th>
 					<th class="table-primary">Ano</th>
-					<th class="table-primary">Data</th>
+					<th class="table-primary">Hora</th>
 					<th class="table-primary">Local</th>
 					<th class="table-primary">Mercadoria</th>
 					<th class="table-primary"></th>
@@ -48,7 +48,7 @@
 								}
 								<td>
 								<a class="btn btn-outline-primary" href="Historico/AttHistoricoEntrada/@row["ID_ENT"]">Editar</a>
-								<a class="btn btn-outline-danger" href="@Url.Action("HistoricoConfirmarExc", new { id = row["ID_ENT"]})">Deletar</a>
+								<a class="btn btn-outline-danger" href="@Url.Action("HistoricoConfirmarExc", new { id = row["ID_ENT"], nome = row["MERCADORIA_ENT"]})">Deletar</a>
 								</td>
 							</tr>
 						}
@@ -83,7 +83,7 @@
 					<th class="table-primary">Dia</th>
 					<th class="table-primary">Mês</th>
 					<th class="table-primary">Ano</th>
-					<th class="table-primary">Data</th>
+					<th class="table-primary">Hora</th>
 					<th class="table-primary">Local</th>
 					<th class="table-primary">Mercadoria</th>
 					<th class="table-primary"></th>
@@ -103,7 +103,7 @@
 								}
 							<td>
 								<a class="btn btn-outline-primary" href="Historico/AttHistoricoSaida/@row["ID_SAIDA"]">Editar</a>
-								<a class="btn btn-outline-danger" href="@Url.Action("ConfirmarExcSaida", new { id = row["ID_SAIDA"]})">Deletar</a>
+								<a class="btn btn-outline-danger" href="@Url.Action("ConfirmarExcSaida", new { id = row["ID_SAIDA"], quantidade = row["QUANTIDADE_SAIDA"], nome = row["MERCADORIA_SAIDA"]})">Deletar</a>
 							</td>
 							</tr>
 						}

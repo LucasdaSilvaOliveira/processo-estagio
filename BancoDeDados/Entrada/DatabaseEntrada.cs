@@ -78,7 +78,7 @@ namespace processo_estágio.BancoDeDados.Entrada
 		}
 
         // EXCLUSÃO DO REGISTRO DE ENTRADA
-        public static void DeletarHistoricoEntrada(string id)
+        public static void DeletarHistoricoEntrada(string? id)
         {
 			using (var cmd = ConexaoBanco().CreateCommand())
 			{
@@ -133,7 +133,7 @@ namespace processo_estágio.BancoDeDados.Entrada
 
         }
 
-        public static DataTable ObterQuantidadeEnt(string nome)
+        public static DataTable ObterQuantidadeEnt(string? nome)
         {
             DataTable dt = new DataTable();
             using (var cmd = ConexaoBanco().CreateCommand())

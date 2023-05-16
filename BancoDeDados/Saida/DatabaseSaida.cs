@@ -77,7 +77,7 @@ namespace processo_estágio.BancoDeDados.Saida
 		}
 
         // EXCLUSÃO DO REGISTRO DE SAIDA
-        public static void DeletarHistoricoSaida(string id)
+        public static void DeletarHistoricoSaida(string? id)
         {
             using (var cmd = ConexaoBanco().CreateCommand())
             {
@@ -131,5 +131,20 @@ namespace processo_estágio.BancoDeDados.Saida
             cmd.ExecuteNonQuery();
 
         }
-    }
+
+
+		public static DataTable ObterQuantidadeEnt(string? nome)
+		{
+			DataTable dt = new DataTable();
+			using (var cmd = ConexaoBanco().CreateCommand())
+			{
+				cmd.CommandText = "SELECT QUANTIDADE_SAIDA FROM tb_saida WHERE MERCADORIA_SAIDA = '" + nome + "'";
+
+				SQLiteDataAdapter da = new SQLiteDataAdapter(cmd.CommandText, ConexaoBanco());
+				da.Fill(dt);
+				ConexaoBanco().Close();
+				return dt;
+			}
+		}
+	}
 }
