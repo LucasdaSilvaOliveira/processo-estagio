@@ -1,6 +1,5 @@
 ﻿using System.Data.SQLite;
 using System.Data;
-using processo_estágio.Models;
 
 namespace processo_estágio.BancoDeDados.Entrada
 {

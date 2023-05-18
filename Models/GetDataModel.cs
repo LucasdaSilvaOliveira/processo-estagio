@@ -1,5 +1,4 @@
-﻿using processo_estágio.BancoDeDados.Mercadorias;
-using System.Data;
+﻿using System.Data;
 
 namespace processo_estágio.Models
 {

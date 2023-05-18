@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Data.SQLite;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace processo_estágio.BancoDeDados.Mercadorias
 {

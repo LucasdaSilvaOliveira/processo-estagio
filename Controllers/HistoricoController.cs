@@ -116,7 +116,7 @@ namespace processo_estágio.Controllers
 			return View();
 		}
 
-		// ATUALIZA O REGISTRO DE ENTRADA
+		// ATUALIZA O REGISTRO DE ENTRADA + LÓGICA PARA ATUALIZAR TAMBÉM A QUANTIDADE TOTAL
 		public ActionResult AtualizarHistoricoEnt(int quantidade, int dia, int mes, int ano, string hora, string local)
 		{
 			DataTable QntdEntAntiga = DatabaseEntrada.ObterQuantidadeEntEspecifica(GetDataModel.idAtualizarHistorico);
@@ -154,7 +154,7 @@ namespace processo_estágio.Controllers
 			return View();
 		}
 
-		// ATUALIZA O REGISTRO DE SAIDA
+		// ATUALIZA O REGISTRO DE SAIDA + LÓGICA PARA ATUALIZAR TAMBÉM A QUANTIDADE TOTAL
 		public ActionResult AtualizarHistoricoSaida(int quantidade, int dia, int mes, int ano, string hora, string local)
 		{
 
@@ -182,7 +182,7 @@ namespace processo_estágio.Controllers
 			return RedirectToAction("Index");
 		}
 
-		// MÉTODO QUE GERA O PDF
+		// MÉTODO QUE GERA O PDF, FEITO COM iTextSharp
 		public ActionResult Pdf()
 		{
 
